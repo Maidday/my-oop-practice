@@ -1,0 +1,152 @@
+package chara;
+
+import java.util.*;
+import items.*;
+import fight.fight;
+
+
+public class hero extends actor {
+
+    public hero(String name, int hp, int def, int atk){
+        super(name, hp, def, atk, "This is you.", true);
+    }
+    
+    private equipment weapon;
+    private equipment armor;
+
+    @Override 
+    public void act(fight encounter, Scanner scanner){
+        ArrayList<actor> enemies = new ArrayList<>(encounter.getParticipants());
+            for(actor e : encounter.getParticipants()){
+                if(e.isPC() == this.isPC()) enemies.remove(e);
+            }
+        
+        System.out.println("Choose action:");
+        System.out.println("ATTACK  ||  ITEMS  ||  ACT");
+        String choice = scanner.nextLine().toLowerCase().replace(" ", "");
+        if(choice.equals("attack")){
+            System.out.println("Choose target:");
+            
+            for(actor e : enemies){
+                System.out.println(e.toString());
+            }
+            choice = scanner.nextLine().toLowerCase().replace(" ", "");
+            for(actor e : enemies){
+                if(e.getName().toLowerCase().replace(" ", "").equals(choice)){
+                    System.out.println("You attacked " + e.toString() + " and dealt " + attack(e, encounter) + " damage!");
+                    return;
+                }
+
+                else System.out.println("Not a valid target");
+            }
+        }
+        else if(choice.equals("items")){
+                System.out.println("Choose item: ");
+                for(item e : inventory){
+                    System.out.println(e.toString());
+                }
+                choice = scanner.nextLine().toLowerCase().replace(" ", "");
+                for(item e : inventory){
+                    if(choice.equals(e.toString())){
+                    e.onUse(this, 1);
+                    return;
+                    }
+                }
+                System.out.println("No such item in inventory.");
+            }
+        else if(choice.equals("act")){
+            System.out.println("Choose act: ");
+            System.out.println("INSPECT   ||  RUN   || STATS");
+            choice = scanner.nextLine().toLowerCase().replace(" ", "");
+            if(choice.equals("inspect")){
+                System.out.println("Choose target:");
+            
+                for(actor e : enemies){
+                    System.out.println(e.toString());
+                }
+                choice = scanner.nextLine().toLowerCase().replace(" ", "");
+                for(actor e : enemies){
+                    if(e.getName().toLowerCase().replace(" ", "").equals(choice)){
+                    System.out.println("This is a " + e.getName() + ". " + e.getDesc());
+                    return;
+                    }
+
+                    
+                }
+                System.out.println("Not a valid target");
+            }
+            else if(choice.equals("run")){
+                System.out.println("You ran away like a coward");
+                encounter.getParticipants().remove(this);
+            }
+            else if(choice.equals("stats")){
+                System.out.println("This is you.");
+                System.out.println("Your name is " + this.getName());
+                System.out.println("You have " + this.getHp() + "/" + this.getMaxHp() + " HP");
+                System.out.println("Your defense is " + this.getDef());
+                System.out.println("Your attack is " + this.getAtk());
+            }
+           
+            else{
+            System.out.println("Unknown action. Try again.");
+            act(encounter, scanner);
+        }
+
+        }
+        
+    }
+
+    @Override 
+    public void equip(equipment equipment){
+        if (inventory.contains(equipment)){
+            if((equipment.getSlot().equals("weapon") && this.weapon != null)||(equipment.getSlot().equals("armor") && this.armor != null)){
+                if(equipment.getSlot().equals("armor")) dequip(armor);
+                else if(equipment.getSlot().equals("weapon")) dequip(weapon);
+            }
+            if((equipment.getSlot().equals("weapon") && this.weapon == null)||(equipment.getSlot().equals("armor") && this.armor == null)){
+                equipment.equip(this);
+                if(equipment.getSlot().equals("weapon")) this.weapon = equipment;
+                if(equipment.getSlot().equals("armor")) this.armor = equipment;
+                inventory.remove(equipment);
+                System.out.println("Successfully equiped " + equipment.toString());
+                return;
+            }
+            
+        }
+        System.out.println("No such equipment in inventory");
+    }
+
+    public void dequip(equipment equipment){
+        if(equipment.getSlot() == "weapon" && equipment == this.weapon){
+            weapon.dequip(this);
+            inventory.add(weapon);
+            weapon = null;
+            return;
+        }
+        if(equipment.getSlot() == "armor" && equipment == this.armor){
+            armor.dequip(this);
+            inventory.add(armor);
+            armor = null;
+            return;
+        }
+        System.out.println("Nothing to dequip");
+    }
+
+    public void inspect(actor target){
+        System.out.println(target.toString());
+        System.out.println(target.getDesc());
+        System.out.println("They have " + target.getHp() + " health left.");
+    }
+    public void inspect(item target){
+        if(inventory.contains(target)){
+            System.out.println(target.getDesc());
+        }
+        else System.out.println("No such item in inventory");
+    }
+
+    @Override 
+    protected void death(fight encounter){
+        System.out.println(this.getName() + " You are dead and your quest is failed!");
+        System.exit(0);
+    }
+}
