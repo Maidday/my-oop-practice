@@ -9,8 +9,5 @@ public class clothArmor extends equipment{
         super("Cloth armor", "armor", "Cheapest armor awailable.");
     }
     
-    @Override 
-    public void modStats(actor target, int mod){
-        target.setDef(target.getDef() + def * mod);
-    }
+    
 }
