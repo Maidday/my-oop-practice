@@ -2,6 +2,7 @@ package game;
 import chara.*;
 import fight.fight;
 import action.*;
+import items.*;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
@@ -9,11 +10,11 @@ import java.util.*;
 
 public class game {
 
-    private ArrayList<actor> knownActors = new ArrayList<>();
-
+    private ArrayList<actor> knownActors = new ArrayList<>(); //all instances of new actors should be added to this list
+    private ArrayList<item> knownItems = new ArrayList<>(); //same for items
     private game() { }
 
-    private static final game INSTANCE = new game();
+    private static final game INSTANCE = new game(); //game is a singleton. refer to it as game.getInstance()...
 
     public static game getInstance() {
         return INSTANCE;
@@ -69,6 +70,32 @@ public class game {
         for(actor a : temp){
             if(a.getId().equals(actorID)) {
                 knownActors.remove(a);
+                return;
+            }
+        }
+    }
+
+    public ArrayList<item> getKnownItems(){ return knownItems;}
+    public void addItem(item _item){
+        knownItems.add(_item);
+    }
+    public void removeItem(item _item){
+        knownItems.remove(_item);
+    }
+    public void removeItem(String _item){
+        ArrayList<item> temp = new ArrayList<>(knownItems);
+        for(item a : temp){
+            if(a.getName().equals(_item)) {
+                knownItems.remove(a);
+                return;
+            }
+        }
+    }
+    public void removeItem(UUID itemID){
+        ArrayList<item> temp = new ArrayList<>(knownItems);
+        for(item a : temp){
+            if(a.getId().equals(itemID)) {
+                knownItems.remove(a);
                 return;
             }
         }
