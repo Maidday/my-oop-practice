@@ -11,6 +11,10 @@ public class alphaText implements Text{
 
     //mkethods
 
+    public void addNew(){
+
+    }
+
     public void add(Text element) {
         element.setLevel(level);
         children.add(element);

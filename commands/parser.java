@@ -1,8 +1,11 @@
+package commands;
 import java.util.*;
 
-public class parser {
+import records.*;;
 
-    public static parserResult parser(String[] args){
+public abstract class parser {
+
+    public static parserResult parse(String[] args){
         var arguments = new ArrayList<String>();
         var options = new HashMap<String, String>();
         String option = "";

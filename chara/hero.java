@@ -1,20 +1,25 @@
 package chara;
 
+import java.io.IOException;
 import java.util.*;
+
+import action.attackAction;
 import items.*;
 import fight.fight;
+import game.*;
 
 
 public class hero extends actor {
 
     public hero(String name, int hp, int def, int atk){
         super(name, hp, def, atk, "This is you.", true);
+        _actions.add(new attackAction(this));
     }
     
     private equipment weapon;
     private equipment armor;
 
-    @Override 
+    /*@Override               REWRITE ACTIONS TO BE MANAGED BY GAME CLASS
     public void act(fight encounter, Scanner scanner){
         ArrayList<actor> enemies = new ArrayList<>(encounter.getParticipants());
             for(actor e : encounter.getParticipants()){
@@ -95,28 +100,28 @@ public class hero extends actor {
         }
         
     }
-
+*/
     @Override 
-    public void equip(equipment equipment){
+    public void equip(equipment equipment, Logger logger) throws IOException{
         if (inventory.contains(equipment)){
             if((equipment.getSlot().equals("weapon") && this.weapon != null)||(equipment.getSlot().equals("armor") && this.armor != null)){
-                if(equipment.getSlot().equals("armor")) dequip(armor);
-                else if(equipment.getSlot().equals("weapon")) dequip(weapon);
+                if(equipment.getSlot().equals("armor")) dequip(armor, logger);
+                else if(equipment.getSlot().equals("weapon")) dequip(weapon, logger);
             }
             if((equipment.getSlot().equals("weapon") && this.weapon == null)||(equipment.getSlot().equals("armor") && this.armor == null)){
                 equipment.equip(this);
                 if(equipment.getSlot().equals("weapon")) this.weapon = equipment;
                 if(equipment.getSlot().equals("armor")) this.armor = equipment;
                 inventory.remove(equipment);
-                System.out.println("Successfully equiped " + equipment.toString());
+                logger.log("Successfully equiped " + equipment.toString());
                 return;
             }
             
         }
-        System.out.println("No such equipment in inventory");
+        logger.log("No such equipment " + equipment.toString() + " in inventory");
     }
 
-    public void dequip(equipment equipment){
+    public void dequip(equipment equipment, Logger logger) throws IOException{
         if(equipment.getSlot() == "weapon" && equipment == this.weapon){
             weapon.dequip(this);
             inventory.add(weapon);
@@ -129,7 +134,7 @@ public class hero extends actor {
             armor = null;
             return;
         }
-        System.out.println("Nothing to dequip");
+       logger.log("Nothing to dequip");
     }
 
     public void inspect(actor target){
@@ -144,9 +149,4 @@ public class hero extends actor {
         else System.out.println("No such item in inventory");
     }
 
-    @Override 
-    protected void death(fight encounter){
-        System.out.println(this.getName() + " You are dead and your quest is failed!");
-        System.exit(0);
-    }
 }

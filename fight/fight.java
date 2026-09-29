@@ -1,15 +1,16 @@
 //a fight is used to determine outcomes of encounters.
 package fight;
 
+import java.io.IOException;
 import java.util.*;
 import chara.*;
+import game.*;
 
 public class fight {
     private ArrayList<actor> participants = new ArrayList<>();
 
-    public fight(ArrayList<actor> participants, Scanner scanner){
+    public fight(ArrayList<actor> participants){
         this.participants = participants;
-        flow(scanner);
         
     }
 
@@ -17,24 +18,22 @@ public class fight {
         return participants;
     }
 
+    public void StartCombat(Scanner scanner, Logger logger) throws IOException{
+        flow(scanner, logger);
+    }
+
     //characters act on their turns. Fight is finished when all enemies perish
-    private void flow(Scanner scanner){
+    private void flow(Scanner scanner, Logger logger) throws IOException{
         while(true){
         for(actor fighter : new ArrayList<actor>(participants)){
-            if(fighter.isPC()){
-                fighter.act(this, scanner);
-                
-            }
-            else if(!fighter.isPC()){
-                if(fighter.defaultAct(this) == -1)return;
-            }
+            game.getInstance().processTurn(fighter, this, logger, scanner);
             boolean endofcombat = participants.stream().allMatch(n -> n.isPC() == fighter.isPC());
             if(endofcombat && fighter.isPC()){
-                System.out.println("You won in that combat!");
+                logger.log("You won in that combat!");
                 return;
             }
             else if(endofcombat && !fighter.isPC()){
-                System.out.println("You lost in that combat!");
+                logger.log("You lost in that combat!");
                 return;
             }
         }

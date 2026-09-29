@@ -1,46 +1,57 @@
 import chara.*;
 import items.*;
+import records.parserResult;
 import fight.fight;
+
+import java.io.IOException;
 import java.util.*;
 import game.*;
+import commands.*;
 
 
 public class Main{
-    public static void main(String[] args){
-
-        
+    public static void main(String[] args) throws IOException{
         Scanner scanner = new Scanner(System.in);
         Logger logger = new Logger("./logs/logfile.txt");
+        logger.log("Started logging");
+
+        if(!(args.length > 0)) {
+            args = new String[1];
+            args[0] = "";
+        }
+
+        parserResult parseArgs = parser.parse(args);
+        ArrayList<String> arguments = parseArgs.arguments();
+        HashMap<String, String> options = parseArgs.options();
+
         
 
-    
-        hero Vadim = new hero("Vadim", 8, 0, 1);
-        rustySword Rustik = new rustySword("Rusty Sword");
-        Vadim.add(Rustik);
-        Vadim.equip(Rustik);
-        System.out.println(Vadim.getAtk());
-        clothArmor clothArmor = new clothArmor();
-        Vadim.add(clothArmor);
-        Vadim.equip(clothArmor);
-        healthPotion HPotion = new healthPotion();
-        Vadim.add(HPotion);
-        heroSword Hsword = new heroSword();
-        Vadim.add(Hsword);
+        
 
-        hero Yaroslave = new hero("Yarik", 5, 0, 3);
-        Yaroslave.add(new rustySword("Very rusty sword"));
-        Yaroslave.add(new healthPotion());
+        try{
+            String InterfaceMode = intefaceMode.getInterfaceMode(arguments, logger, scanner);
+            while(true){
+                
 
-        ArrayList<actor> adv = new ArrayList<>();
-        adv.add(Vadim);
-        adv.add(Yaroslave);
-        zhegan Zheka = new zhegan();
-        adv.add(Zheka);
-        bob BOB = new bob();
-        adv.add(BOB);
 
-        fight tutorial = new fight(adv, scanner);
+            }
+            
 
+
+        }
+        catch(Exception e){
+            logger.log("Caught an exception: " + e.toString());
+            e.printStackTrace();
+        }
+        catch(Error e){
+            logger.log("Caught an error: " + e.toString());
+            e.printStackTrace();
+        }
+
+        finally{
+            logger.log("Reached end of execution");
+            
+        }
 
         }
 }

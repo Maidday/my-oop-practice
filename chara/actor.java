@@ -2,9 +2,12 @@ package chara;
 
 import game.*;
 import items.*;
-import java.util.*;
-import java.util.concurrent.ThreadLocalRandom;
 
+import java.io.IOException;
+import java.util.*;
+
+import action.actions;
+import action.attackAction;
 import fight.fight;
 
 public abstract class actor {
@@ -13,21 +16,28 @@ public abstract class actor {
     private int hp;
     private int def;      //Defence. Useful against attacks
     private int atk;    //Attack. Used to harm things
+    private UUID id;    //Unique ID of an actor
     protected  boolean PC;      //PC is for "Player Character". Actor act according to their "AI" if they are not PCs
     protected String desc; //description for enemies
+    protected actions _defaultAct = new attackAction(this);
 
+
+    protected ArrayList<actions> _actions = new ArrayList<>();
     protected ArrayList<item> inventory = new ArrayList<>();
 
     public actor(String name, int hp, int def, int atk, boolean isPC){
+        _actions.add(new attackAction(this));
         this.name = name;
         this.maxHp = hp;
         this.hp = hp;
         this.def = def;
         this.atk = atk;
         this.PC = isPC;
+        this.id = UUID.randomUUID();
     }
 
     public actor(String name, int hp, int def, int atk, String desc, boolean isPC){
+        _actions.add(new attackAction(this));
         this.name = name;
         this.maxHp = hp;
         this.hp = hp;
@@ -35,6 +45,7 @@ public abstract class actor {
         this.atk = atk;
         this.desc = desc;
         this.PC = isPC;
+        this.id = UUID.randomUUID();
     }
 
     public boolean isPC(){
@@ -59,6 +70,11 @@ public abstract class actor {
     public int getHp(){return hp;}
     public String getDesc(){ return desc;}
     public ArrayList<item> getInventory(){return inventory;}
+    public UUID getId() {return id;}
+
+    public void add(actions action){
+        _actions.add(action);
+    }
 
     public void add(item stuff){
         inventory.add(stuff);
@@ -70,16 +86,12 @@ public abstract class actor {
         }
     }
 
-    public int attack(actor target, fight encounter){
-        int dmg = atk + (new Random().nextInt(10)) - target.getDef() - (new Random().nextInt(10));
-        if(dmg > 0) {target.harm(dmg, encounter); return dmg;}
-        else return 0;
-    }
-
-    public void harm(int dmg, fight encounter){
+    public void harm(int dmg, Logger logger) throws IOException{
+        dmg -= this.getDef();
         if(dmg > 0)
             hp -= dmg;
-        if(hp<=0) death(encounter);
+        else dmg = 0;
+        logger.log(this.getName() + " recieved " + dmg + " damage.");
     }
 
     public void heal(int heal){
@@ -93,21 +105,25 @@ public abstract class actor {
         return name;
     }
 
-    public int defaultAct(fight encounter){
-        ArrayList<actor> enemies = new ArrayList<>(encounter.getParticipants());
-        for(actor e : encounter.getParticipants()){
-            if(e.isPC() == this.isPC()) enemies.remove(e);
-        }
-        if(enemies.isEmpty()) return -1;
-        actor target = enemies.get(ThreadLocalRandom.current().nextInt(enemies.size()));
-        System.out.println(this.getName() + " attacks " + target.getName() + " for " + attack(target, encounter) + " damage.");
-        return 0;
+    public actions getDefaultAct(){
+        return _defaultAct;
+    }
+
+    public void setDefaultAct(actions action){
+        this._defaultAct = action;
     }
 
      public void act(fight encounter, Scanner scanner){
      }
 
-     public void equip(equipment equipment){
+     public ArrayList<actions> getActions(){ return this._actions;}
+
+     public int defaultAct(actor target, fight combat, Logger logger, Scanner scanner) throws IOException{
+        this._defaultAct.use(target, combat, logger, scanner);
+        return 0;
+     }
+
+     public void equip(equipment equipment, Logger logger) throws IOException{
 
      }
 
@@ -116,8 +132,11 @@ public abstract class actor {
         return getName();
     }
 
-    protected void death(fight encounter){
-        System.out.println(name + " fainted!");
-        encounter.getParticipants().remove(this);
+    protected boolean death(Logger logger) throws IOException{
+        if(this.hp<=0){
+            logger.log(name + " fainted!");
+            return true;
+        }
+        else return false;
     }
 }

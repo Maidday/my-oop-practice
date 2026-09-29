@@ -1,5 +1,6 @@
 package items;
 import chara.*;
+import game.*;
 
 public class healthPotion extends usable{
 
@@ -8,7 +9,7 @@ public class healthPotion extends usable{
     }
 
     @Override 
-    public void onUse(actor target, int mod){
+    public void onUse(actor target, int mod, Logger logger){
         System.out.println("You are healed for " + 5*mod + " HP.");
         target.heal(5*mod);
         consume(target);

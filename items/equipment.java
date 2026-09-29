@@ -1,6 +1,9 @@
 package items;
 
+import java.io.IOException;
+
 import chara.*;
+import game.*;
 
 public abstract class equipment extends item{
         private String slot;   //where does it go
@@ -32,8 +35,8 @@ public abstract class equipment extends item{
         }
 
         @Override 
-        public void onUse(actor target, int mod){
-            target.equip(this);
+        public void onUse(actor target, int mod, Logger logger) throws IOException{
+            target.equip(this, logger);
         }
 
         @Override 

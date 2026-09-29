@@ -2,6 +2,7 @@ package game;
 
 import java.io.IOException;
 import java.nio.file.*;
+import java.time.LocalDateTime;
 
 public class Logger {
     private Path _path;
@@ -38,7 +39,7 @@ public class Logger {
         }
 
          if(_path != null){
-            writeToFile(_message + "\n");
+            writeToFile(LocalDateTime.now().toString()+ " " + _message + "\n");
          }
 
         return callback(_message);
@@ -46,7 +47,7 @@ public class Logger {
 
     private void writeToFile(String _message) throws IOException{
        
-
+            Files.createDirectories(_path.getParent());
             Files.writeString(_path, _message, 
                     StandardOpenOption.CREATE, 
                     StandardOpenOption.APPEND);
