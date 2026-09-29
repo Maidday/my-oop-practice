@@ -1,11 +1,9 @@
 package chara;
 
 import java.io.IOException;
-import java.util.*;
 
 import action.attackAction;
 import items.*;
-import fight.fight;
 import game.*;
 
 

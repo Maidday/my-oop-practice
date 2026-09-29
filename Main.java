@@ -1,7 +1,7 @@
 import chara.*;
 import items.*;
-import records.parserResult;
 import fight.fight;
+import records.parserResult;
 
 import java.io.IOException;
 import java.util.*;
