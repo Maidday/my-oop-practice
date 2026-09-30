@@ -30,12 +30,12 @@ public class actions {
     }
 
 
-    protected void onUse(actor target, Logger logger, Scanner scanner)  throws IOException{
+    protected void onUse(actor target, fight combat, Logger logger, Scanner scanner)  throws IOException{
 
     }
 
-    public void use(actor target, Logger logger, Scanner scanner)  throws IOException{
-        onUse(target, logger, scanner);
+    public void use(actor target, fight combat, Logger logger, Scanner scanner)  throws IOException{
+        onUse(target, combat, logger, scanner);
     }
 
     public void setOwner(actor owner){this._owner = owner;}
