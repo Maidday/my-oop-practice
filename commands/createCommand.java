@@ -1,21 +1,39 @@
 package commands;
 import java.io.IOException;
 import java.util.*;
+
+import action.actions;
 import game.*;
 import items.*;
 import chara.hero;
 
 public abstract class createCommand{
     
-    public static void create(ArrayList<String> arguments, ArrayList<String> commandArguments, HashMap<String, String> options, HashMap<String, String> commandOptions, Scanner scanner, Logger logger) throws IOException, Exception{
-        if(commandArguments.get(1).toLowerCase().equals("char") 
-            || commandArguments.get(1).toLowerCase().equals("character")) createCharacter(arguments, commandArguments, options, commandOptions, scanner, logger);
-        else if (commandArguments.get(1).toLowerCase().equals("item")) createItem(arguments, commandArguments, options, commandOptions, scanner, logger);
-        else if (commandArguments.get(1).toLowerCase().equals("ability")) createAction(arguments, commandArguments, options, commandOptions, scanner, logger);
-
+    public static void create(ArrayList<String> arguments, ArrayList<String> commandArguments, HashMap<String, String> options, HashMap<String, String> commandOptions, Scanner scanner, Logger logger) throws IOException{
+        if(commandArguments.size()<2){
+            logger.log("Specify required object: character, item or ability?");
+            String answer = scanner.nextLine();
+            commandArguments.add(1, answer);
+        }
+        String type = commandArguments.get(1).toLowerCase();
+        switch(type){
+            case "char":
+            case "character":
+                createCharacter(arguments, commandArguments, options, commandOptions, scanner, logger);
+                break;
+            case "item":
+                createItem(arguments, commandArguments, options, commandOptions, scanner, logger);
+                break;
+            case "ability":
+            case "action":
+                createAction(arguments, commandArguments, options, commandOptions, scanner, logger);
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown object type for create <object> command. Viable types are: character, item or ability.");
+        }
     }
 
-    private static void createCharacter(ArrayList<String> arguments, ArrayList<String> commandArguments, HashMap<String, String> options, HashMap<String, String> commandOptions, Scanner scanner, Logger logger) throws IOException, Exception{
+    private static void createCharacter(ArrayList<String> arguments, ArrayList<String> commandArguments, HashMap<String, String> options, HashMap<String, String> commandOptions, Scanner scanner, Logger logger) throws IOException{
         String name = "";
         int hp = 0;
         int atk = 0;
@@ -25,7 +43,7 @@ public abstract class createCommand{
             if(key.toLowerCase().equals("-h")|| key.toLowerCase().equals("--help")){
                 logger.log("viable parameters for create character command: \n -h or --help will print this message if no other options passed. \n -n or --name determines character's name(not class name) \n -a or --atk determines starting attack. \n -h or --hp determines starting health. \n -d or --def determines starting defence. \n \n at least 4 options required to successfully create a character.");
             }
-            else throw new Exception("Unknown option for command create character: " + commandOptions.get(key));
+            else throw new IllegalArgumentException("Unknown option for command create character: " + commandOptions.get(key));
         }
     }
         else if(commandOptions.size()<4){
@@ -72,7 +90,7 @@ public abstract class createCommand{
         game.getInstance().addActor(customHero);
     }
     
-    private static void createItem(ArrayList<String> arguments, ArrayList<String> commandArguments, HashMap<String, String> options, HashMap<String, String> commandOptions, Scanner scanner, Logger logger) throws IOException, Exception{
+    private static void createItem(ArrayList<String> arguments, ArrayList<String> commandArguments, HashMap<String, String> options, HashMap<String, String> commandOptions, Scanner scanner, Logger logger) throws IOException{
         String name = "";
         String desc = "";
         String type = "armor";
@@ -82,7 +100,7 @@ public abstract class createCommand{
             if(key.toLowerCase().equals("-h")|| key.toLowerCase().equals("--help")){
                 logger.log("viable parameters for create item command: \n -h or --help will print this message if no other options passed. \n -n or --name determines item name(not class name) \n -t or --type can be either armor or weapon. \n -s or --stat determines attack for weapons and defence for armor. \n -d or --desc description. \n \n at least 4 options required to successfully create an item with a command.");
                 }
-            else throw new Exception("Unknown option for command create item: " + commandOptions.get(key));
+            else throw new IllegalArgumentException("Unknown option for command create item: " + commandOptions.get(key));
             }
         }
         else if(commandOptions.size()<4){
@@ -130,7 +148,7 @@ public abstract class createCommand{
                     break;
                 default:
                     throw new IllegalArgumentException(
-                        "Unknown option for command create character: " + entry.getKey());
+                        "Unknown option for command create item: " + entry.getKey());
                 }
 
             }
@@ -143,10 +161,48 @@ public abstract class createCommand{
             weapon customWeapon = new weapon(name, stat, desc);
             game.getInstance().addItem(customWeapon);
         }
+        else throw new IllegalArgumentException("Illegal type for equipment. Equipment can only be armor or weapon.");
     }   
     
 
     private static void createAction(ArrayList<String> arguments, ArrayList<String> commandArguments, HashMap<String, String> options, HashMap<String, String> commandOptions, Scanner scanner, Logger logger) throws IOException{
-
+        String name = "";
+        String desc = "";
+        
+        if(commandOptions.size()==1){
+            for(String key : commandOptions.keySet()){
+            if(key.toLowerCase().equals("-h")|| key.toLowerCase().equals("--help")){
+                logger.log("Viable parameters for create action command: \n -h or --help prints this message if this is the only arguments passed. \n -n or --name determines name of an action. \n -d or --desc allows to enter description for an action. \n You need to enter at least two arguments to successfully create an action.\n");
+                }
+            else throw new IllegalArgumentException("Unknown option for command create item: " + commandOptions.get(key));
+            }
+        }
+        else if (commandOptions.size()<2){
+            logger.log("Creating a new action \n Enter the name of a new action");
+            name = scanner.nextLine();
+            logger.log("Enter description of your action");
+            desc = scanner.nextLine();
+        }
+        
+        else {for(Map.Entry<String, String> entry : commandOptions.entrySet()){
+            String key = entry.getKey().toLowerCase();
+            String value = entry.getValue();
+            switch(key){
+                case "-n":
+                case "--name":
+                    name = value;
+                    break;
+                case "-d":
+                case "--desc":
+                    desc = value;
+                    break;
+                default:
+                    throw new IllegalArgumentException(
+                        "Unknown option for command create action: " + entry.getKey());
+                }
+            }
+        }
+        actions customAction = new actions(null, name, desc);
+        game.getInstance().addAction(customAction);
     }
 }

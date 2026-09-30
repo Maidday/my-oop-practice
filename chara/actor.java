@@ -22,11 +22,12 @@ public abstract class actor {
     protected actions _defaultAct = new attackAction(this);
 
 
-    protected ArrayList<actions> _actions = new ArrayList<>();
-    protected ArrayList<item> inventory = new ArrayList<>();
+    protected HashMap<UUID, actions> _actions = new HashMap<>();
+    protected HashMap<UUID, item> inventory = new HashMap<>();
 
     public actor(String name, int hp, int def, int atk, boolean isPC){
-        _actions.add(new attackAction(this));
+        actions baseAttack = new attackAction(this);
+        _actions.put(baseAttack.getId(), baseAttack);
         this.name = name;
         this.maxHp = hp;
         this.hp = hp;
@@ -37,7 +38,8 @@ public abstract class actor {
     }
 
     public actor(String name, int hp, int def, int atk, String desc, boolean isPC){
-        _actions.add(new attackAction(this));
+        actions baseAttack = new attackAction(this);
+        _actions.put(baseAttack.getId(), baseAttack);
         this.name = name;
         this.maxHp = hp;
         this.hp = hp;
@@ -69,21 +71,18 @@ public abstract class actor {
     public int getMaxHp(){return maxHp;}
     public int getHp(){return hp;}
     public String getDesc(){ return desc;}
-    public ArrayList<item> getInventory(){return inventory;}
+    public HashMap<UUID, item> getInventory(){return inventory;}
     public UUID getId() {return id;}
 
     public void add(actions action){
-        _actions.add(action);
+        action.setOwner(this);
+        _actions.put(action.getId(), action);
+        
+
     }
 
     public void add(item stuff){
-        inventory.add(stuff);
-    }
-
-    public void add(item stuff, int quantity){
-        for(int i = 0; i<quantity; i++){
-            inventory.add(stuff);
-        }
+        inventory.put(stuff.getId(), stuff);
     }
 
     public void harm(int dmg, Logger logger) throws IOException{
@@ -116,7 +115,7 @@ public abstract class actor {
      public void act(fight encounter, Scanner scanner){
      }
 
-     public ArrayList<actions> getActions(){ return this._actions;}
+     public HashMap<UUID, actions> getActions(){ return this._actions;}
 
      public int defaultAct(actor target, fight combat, Logger logger, Scanner scanner) throws IOException{
         this._defaultAct.use(target, combat, logger, scanner);

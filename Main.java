@@ -31,7 +31,7 @@ public class Main{
         try{
             String InterfaceMode = intefaceMode.getInterfaceMode(arguments, logger, scanner);
             while(true){
-                
+                commandListener.getInstance().listener(arguments, options, scanner, logger, InterfaceMode);
 
 
             }

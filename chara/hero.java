@@ -6,12 +6,14 @@ import action.attackAction;
 import items.*;
 import game.*;
 
+import java.util.Map;
+import java.util.UUID;
+
 
 public class hero extends actor {
 
     public hero(String name, int hp, int def, int atk){
         super(name, hp, def, atk, "This is you.", true);
-        _actions.add(new attackAction(this));
     }
     
     private equipment weapon;
@@ -101,7 +103,7 @@ public class hero extends actor {
 */
     @Override 
     public void equip(equipment equipment, Logger logger) throws IOException{
-        if (inventory.contains(equipment)){
+        if (inventory.containsValue(equipment)){
             if((equipment.getSlot().equals("weapon") && this.weapon != null)||(equipment.getSlot().equals("armor") && this.armor != null)){
                 if(equipment.getSlot().equals("armor")) dequip(armor, logger);
                 else if(equipment.getSlot().equals("weapon")) dequip(weapon, logger);
@@ -110,25 +112,34 @@ public class hero extends actor {
                 equipment.equip(this);
                 if(equipment.getSlot().equals("weapon")) this.weapon = equipment;
                 if(equipment.getSlot().equals("armor")) this.armor = equipment;
-                inventory.remove(equipment);
+                UUID equipmentID = UUID.fromString("");
+                for(Map.Entry<UUID, item> entry : this.getInventory().entrySet()){
+                    item value = entry.getValue();
+                    UUID key = entry.getKey();
+                    if(equipment.toString().toLowerCase().equals(value.toString().toLowerCase())){
+                        equipmentID = key;
+                    }
+                }
+                inventory.remove(equipmentID);
                 logger.log("Successfully equiped " + equipment.toString());
                 return;
             }
             
         }
-        logger.log("No such equipment " + equipment.toString() + " in inventory");
+
+        else logger.log("No such equipment " + equipment.toString() + " in inventory");
     }
 
     public void dequip(equipment equipment, Logger logger) throws IOException{
         if(equipment.getSlot() == "weapon" && equipment == this.weapon){
             weapon.dequip(this);
-            inventory.add(weapon);
+            inventory.put(weapon.getId(), weapon);
             weapon = null;
             return;
         }
         if(equipment.getSlot() == "armor" && equipment == this.armor){
             armor.dequip(this);
-            inventory.add(armor);
+            inventory.put(armor.getId(), armor);
             armor = null;
             return;
         }
@@ -141,7 +152,7 @@ public class hero extends actor {
         System.out.println("They have " + target.getHp() + " health left.");
     }
     public void inspect(item target){
-        if(inventory.contains(target)){
+        if(inventory.values().contains(target)){
             System.out.println(target.getDesc());
         }
         else System.out.println("No such item in inventory");

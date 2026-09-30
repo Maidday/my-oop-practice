@@ -10,8 +10,9 @@ import java.util.*;
 
 public class game {
 
-    private ArrayList<actor> knownActors = new ArrayList<>(); //all instances of new actors should be added to this list
-    private ArrayList<item> knownItems = new ArrayList<>(); //same for items
+    private HashMap<UUID, actor> knownActors = new HashMap<>(); //all instances of new actors should be added to this list
+    private HashMap<UUID, item> knownItems = new HashMap<>(); //same for items
+    private HashMap<UUID, actions> knownActions = new HashMap<>(); //same for actions
     private game() { }
 
     private static final game INSTANCE = new game(); //game is a singleton. refer to it as game.getInstance()...
@@ -23,13 +24,13 @@ public class game {
     public void processTurn(actor fighter, fight combat, Logger logger, Scanner scanner) throws IOException{
         if(fighter.isPC()){
             logger.log(fighter.getName() + " chooses an action. List of actions: ");
-            for(actions a : fighter.getActions()){
-                logger.log(a.toString());
+            for(Map.Entry<UUID, actions> entry : fighter.getActions().entrySet()){
+                logger.log(entry.getValue().toString());
             }
             String chosen = scanner.nextLine().toLowerCase().replace(" ", "");
-            for(actions a : fighter.getActions()){
-                if(a.toString().toLowerCase().replace(" ", "").equals(chosen)){
-                    a.use(fighter, combat, logger, scanner);
+            for(Map.Entry<UUID, actions> entry : fighter.getActions().entrySet()){
+                if(entry.getValue().toString().toLowerCase().replace(" ", "").equals(chosen)){
+                    entry.getValue().use(fighter, combat, logger, scanner);
                     continue;
                 }
                 
@@ -49,56 +50,77 @@ public class game {
         }
     }
 
-    public ArrayList<actor> getKnownActors(){ return knownActors;}
+    public HashMap<UUID, actor> getKnownActors(){ return knownActors;}
     public void addActor(actor _actor){
-        knownActors.add(_actor);
+        knownActors.put(_actor.getId(), _actor);
     }
     public void removeActor(actor _actor){
-        knownActors.remove(_actor);
+        knownActors.remove(_actor.getId());
     }
     public void removeActor(String _actor){
-        ArrayList<actor> temp = new ArrayList<>(knownActors);
-        for(actor a : temp){
-            if(a.getName().equals(_actor)) {
-                knownActors.remove(a);
-                return;
+        UUID target = UUID.fromString("");
+        for(Map.Entry<UUID, actor> entry : knownActors.entrySet()){
+            if(entry.getValue().toString().toLowerCase().equals(_actor)){
+                target = entry.getKey();
+                break;
             }
         }
+        if(target.toString().equals("")) return;
+        else knownActors.remove(target);
+
     }
     public void removeActor(UUID actorID){
-        ArrayList<actor> temp = new ArrayList<>(knownActors);
-        for(actor a : temp){
-            if(a.getId().equals(actorID)) {
-                knownActors.remove(a);
-                return;
-            }
-        }
+        if(knownActors.containsKey(actorID)) knownActors.remove(actorID);
+        
     }
 
-    public ArrayList<item> getKnownItems(){ return knownItems;}
+    public HashMap<UUID, item> getKnownItems(){ return knownItems;}
     public void addItem(item _item){
-        knownItems.add(_item);
+        knownItems.put(_item.getId(), _item);
     }
     public void removeItem(item _item){
-        knownItems.remove(_item);
+        knownItems.remove(_item.getId());
     }
     public void removeItem(String _item){
-        ArrayList<item> temp = new ArrayList<>(knownItems);
-        for(item a : temp){
-            if(a.getName().equals(_item)) {
-                knownItems.remove(a);
-                return;
+        UUID target = UUID.fromString("");
+        for(Map.Entry<UUID, item> entry : knownItems.entrySet()){
+            if(entry.getValue().toString().toLowerCase().equals(_item)){
+                target = entry.getKey();
+                break;
             }
         }
+        if(target.toString().equals("")) return;
+        else knownActors.remove(target);
+
     }
     public void removeItem(UUID itemID){
-        ArrayList<item> temp = new ArrayList<>(knownItems);
-        for(item a : temp){
-            if(a.getId().equals(itemID)) {
-                knownItems.remove(a);
-                return;
+        if(knownActors.containsKey(itemID)) knownActors.remove(itemID);
+        
+    }
+
+    public HashMap<UUID, actions> getKnownActions(){return knownActions;}
+    public void addAction(actions action){
+        knownActions.put(action.getId(), action);
+    }
+
+    public void removeAction(actions _action){
+        knownActions.remove(_action.getId());
+    }
+    public void removeAction(String _action){
+        UUID target = UUID.fromString("");
+        for(Map.Entry<UUID, actions> entry : knownActions.entrySet()){
+            if(entry.getValue().toString().toLowerCase().equals(_action)){
+                target = entry.getKey();
+                break;
             }
         }
+        if(target.toString().equals("")) return;
+        else knownActions.remove(target);
+
+    }
+    public void removeAction(UUID actionID){
+        if(knownActors.containsKey(actionID)) knownActions.remove(actionID);
+        
     }
 
     private boolean checkDeath(actor target){

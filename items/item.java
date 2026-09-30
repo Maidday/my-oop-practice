@@ -6,7 +6,7 @@ import chara.*;
 import game.*;
 import java.util.UUID;
 
-public abstract class item {
+public class item {
     private String name;
     protected String desc;
     private UUID id;

@@ -1,10 +1,9 @@
 package items;
 
-public class clothArmor extends equipment{
-    private int def = 3;
+public class clothArmor extends armor{
 
     public clothArmor(){
-        super("Cloth armor", "armor", "Cheapest armor awailable.");
+        super("Cloth armor", 3, "Armor for clothing.");
     }
     
     
