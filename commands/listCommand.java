@@ -26,6 +26,8 @@ public abstract class listCommand {
                 case "characters":
                 case "chars":
                 case "char":
+                case "actors":
+                case "actor":
                     for(Map.Entry<UUID, actor> entry : game.getInstance().getKnownActors().entrySet()){
                         logger.log(entry.getValue().toString() + " UUID: " + entry.getKey().toString());
                     }
@@ -33,7 +35,7 @@ public abstract class listCommand {
                 case "items":
                 case "item":
                     for(Map.Entry<UUID, item> entry : game.getInstance().getKnownItems().entrySet()){
-                        logger.log(entry.getValue().toString() + " UUID: " + entry.getKey().toString());
+                        logger.log(entry.getValue().getName() + " UUID: " + entry.getKey().toString());
                     }
                     
                     break;

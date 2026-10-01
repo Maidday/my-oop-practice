@@ -17,7 +17,7 @@ public class attackAction extends actions{
     protected void onUse(actor target, fight combat, Logger logger, Scanner scanner) throws IOException{
         List<actor> enemies = combat.getParticipants().stream().filter(actor -> actor.isPC() != _owner.isPC()).collect(Collectors.toList());
 
-        if(_owner.isPC()){
+        if(_owner.isPC() && target.equals(null)){
             target = chooseTarget(enemies, logger, scanner);
         }
 

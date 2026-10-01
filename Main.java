@@ -26,32 +26,34 @@ public class Main{
 
         
 
-        
-
-        try{
-            String InterfaceMode = intefaceMode.getInterfaceMode(arguments, logger, scanner);
-            while(true){
+        String InterfaceMode = intefaceMode.getInterfaceMode(arguments, logger, scanner);
+        while(true){
+            try{
+            
+            
                 commandListener.getInstance().listener(arguments, options, scanner, logger, InterfaceMode);
+            
+            
 
 
             }
+            catch(Exception e){
+                logger.log("Caught an exception: " + e.toString());
+                e.printStackTrace();
+            }
+            catch(Error e){
+                logger.log("Caught an error: " + e.toString());
+                e.printStackTrace();
+            }
             
-
-
-        }
-        catch(Exception e){
-            logger.log("Caught an exception: " + e.toString());
-            e.printStackTrace();
-        }
-        catch(Error e){
-            logger.log("Caught an error: " + e.toString());
-            e.printStackTrace();
-        }
-
-        finally{
-            logger.log("Reached end of execution");
+    }
+        
             
-        }
+}
 
-        }
+public static void exit(Logger logger) throws IOException{
+    logger.log("reached end of execution.");
+    System.exit(0);
+}
+
 }

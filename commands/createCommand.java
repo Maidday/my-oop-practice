@@ -19,6 +19,7 @@ public abstract class createCommand{
         switch(type){
             case "char":
             case "character":
+            case "actor":
                 createCharacter(arguments, commandArguments, options, commandOptions, scanner, logger);
                 break;
             case "item":
@@ -42,6 +43,7 @@ public abstract class createCommand{
             for(String key : commandOptions.keySet()){
             if(key.toLowerCase().equals("-h")|| key.toLowerCase().equals("--help")){
                 logger.log("viable parameters for create character command: \n -h or --help will print this message if no other options passed. \n -n or --name determines character's name(not class name) \n -a or --atk determines starting attack. \n -h or --hp determines starting health. \n -d or --def determines starting defence. \n \n at least 4 options required to successfully create a character.");
+                return;
             }
             else throw new IllegalArgumentException("Unknown option for command create character: " + commandOptions.get(key));
         }
@@ -52,10 +54,13 @@ public abstract class createCommand{
         name = scanner.nextLine();
         logger.log("Enter starting health points for a character.\n");
         hp = scanner.nextInt();
+        scanner.nextLine();
         logger.log("Enter starting attack for a character.\n");
         atk = scanner.nextInt();
+        scanner.nextLine();
         logger.log("Enter starting defense for your character.\n");
         def = scanner.nextInt();
+        scanner.nextLine();
         
     }
     else{
@@ -114,6 +119,7 @@ public abstract class createCommand{
                     }
             logger.log("Enter parameters for item(atk for weapons and def for armor)\n");
             stat = scanner.nextInt();
+            scanner.nextLine();
             logger.log("Enter description for your item.\n");
             desc = scanner.nextLine();
         }
@@ -133,6 +139,7 @@ public abstract class createCommand{
                     break;
                 case "-t":
                 case "--type":
+                case "--slot":
                     type = value;
                     if(!(type.toLowerCase().equals("armor")) && !(type.toLowerCase().equals("weapon"))){
                         throw new IllegalArgumentException(
