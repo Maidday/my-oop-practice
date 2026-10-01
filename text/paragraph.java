@@ -1,13 +1,17 @@
 package text;
 
+import java.util.UUID;
+
 public class paragraph implements Text{
     private String content;
     private int level;
+    private UUID id = UUID.randomUUID();
 
     public paragraph(String content) {this.content = content;} //constructor
 
     public String getText(){return content;}
     public void setText(String content){this.content = content;}
+    public UUID getId(){return id;}
 
 
     public void setLevel(int level){

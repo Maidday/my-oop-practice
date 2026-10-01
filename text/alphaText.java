@@ -3,11 +3,14 @@ package text;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
 public class alphaText implements Text{
 
     private ArrayList<Text> children = new ArrayList<>();
     private int level = 0;
+    private String name = "";
+    private UUID id = UUID.randomUUID();
 
     //mkethods
 
@@ -41,6 +44,10 @@ public class alphaText implements Text{
     public List<Text> getChildren() {
         return Collections.unmodifiableList(children);
     }
+
+    public void setName(String name){this.name = name;}
+    public String getName(){return name;}
+    public UUID getId(){return id;}
 
     public void UP(){
         this.level++;

@@ -1,9 +1,12 @@
 package text;
 
+import java.util.UUID;
+
 public class image implements Text{
     private String src;
     private String alt;
     private int level;
+    private UUID id = UUID.randomUUID();
 
     public image(String src){
         this.src = src;
@@ -21,6 +24,9 @@ public class image implements Text{
     public int getLevel(){
         return level;
     }
+
+    public UUID getId(){return id;}
+    public String getAlt(){return alt;}
 
     @Override 
     public String render(){

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.*;
 import game.*;
 import records.*;
+import text.*;
 
 
 public abstract class commandListener {
@@ -24,6 +25,7 @@ public abstract class commandListener {
         HashMap<String, String> commandOptions = parseCommand.options();
         logger.log("Args: " + commandArguments.toString() + "\nOptions: " + commandOptions.toString());
         String iHateThatJavaDoesNotKnowWhatDeleteIs = commandArguments.get(0).toLowerCase();
+        if(interfaceMode.equals("chars")){
         switch(iHateThatJavaDoesNotKnowWhatDeleteIs){
             case "create":
                 createCommand.create(arguments, commandArguments, options, commandOptions, scanner, logger);
@@ -54,6 +56,37 @@ public abstract class commandListener {
         }
         
     }
+    else if(interfaceMode.equals("text")){
+        switch(iHateThatJavaDoesNotKnowWhatDeleteIs){
+            case "pwd":
+                pwdCommand.pwd(logger);
+                break;
+            case "print":
+                printCommand.print(commandOptions.containsKey("--whole"), commandOptions.containsKey("--id"), logger);
+                break;
+            case "add":
+                addTextCommand.add(commandArguments, commandOptions, scanner, logger);
+                break;
+            case "rm":
+                rmCommand.rm(commandArguments, scanner, logger);
+                break;
+            case "up":
+                upCommand.up(logger);
+                break;
+            case "cd":
+                cdCommand.cd(commandArguments, commandOptions, logger);
+                break;
+            case "help":
+                logger.log("pwd - show current path\nprint [--whole] [--id] - print current element or whole document\nadd <container|leaf> <type> - add a text element\nrm [<elem_name>] - remove an element\nup - move to parent\ncd <path>|--id <container_id> - change current container\nexit - terminates program.");
+                break;
+            case "exit":
+                System.exit(0);
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown command for text document");
+        }
+    }
+}
 
 
     

@@ -1,9 +1,12 @@
 package text;
 
+import java.util.UUID;
+
 public class link implements Text{
     private String title;
     private String url;
     private int level;
+    private UUID id = UUID.randomUUID();
 
     public link(String title, String url){
         this.title = title;
@@ -16,6 +19,9 @@ public class link implements Text{
     public int getLevel(){
         return level;
     }
+
+    public UUID getId(){return id;}
+    public String getTitle(){return title;}
 
 
     @Override

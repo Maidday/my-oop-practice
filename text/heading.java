@@ -1,8 +1,11 @@
 package text;
 
+import java.util.UUID;
+
 public class heading implements Text{
     private String content;
     private int level;
+    private UUID id = UUID.randomUUID();
 
     public heading(String content, int level){
         this.content = content;
@@ -19,6 +22,8 @@ public class heading implements Text{
     public String getText(){
         return content;
     }
+
+    public UUID getId(){return id;}
 
     @Override 
     public String render(){
