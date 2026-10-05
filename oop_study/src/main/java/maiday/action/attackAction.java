@@ -2,6 +2,9 @@ package maiday.action;
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 
 import maiday.chara.*;
 import maiday.game.*;
@@ -11,6 +14,13 @@ public class attackAction extends actions{
 
     public attackAction(actor _owner){
         super(_owner, "Attack action", "Attack an enemy with your standart atttack.");
+    }
+
+    @JsonCreator
+    public attackAction(@JsonProperty("name") String name,
+                        @JsonProperty("desc") String desc,
+                        @JsonProperty("id") UUID id){
+        super(null, name, desc, id);
     }
 
     @Override 

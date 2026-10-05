@@ -5,9 +5,13 @@ import java.io.IOException;
 import maiday.chara.*;
 import maiday.game.*;
 
-public abstract class equipment extends item{
+public class equipment extends item{
         private String slot;   //where does it go
         
+        public equipment(String name, String slot, int stat, String desc){
+            super(name, stat, desc);
+            this.slot = slot;
+        }
 
         public equipment(String name, String slot){
             super(name);

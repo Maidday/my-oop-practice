@@ -1,5 +1,9 @@
 package maiday.action;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
 import java.io.IOException;
 import java.util.Scanner;
 import java.util.UUID;
@@ -8,6 +12,8 @@ import maiday.chara.*;
 import maiday.game.*;
 import maiday.fight.*;
 
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type", defaultImpl = attackAction.class)
+@JsonSubTypes({@JsonSubTypes.Type(value = attackAction.class, name = "attackAction")})
 public class actions {
 
     protected actor _owner;
@@ -20,6 +26,13 @@ public class actions {
         this._name = name;
         this._description = desc;
         this._id = UUID.randomUUID();
+    }
+
+    protected actions(actor owner, String name, String desc, UUID id){
+        this._owner = owner;
+        this._name = name;
+        this._description = desc;
+        this._id = id;
     }
 
     public actions(actions example){
@@ -40,6 +53,7 @@ public class actions {
 
     public void setOwner(actor owner){this._owner = owner;}
 
+    @JsonIgnore
     public actor getOwner(){return this._owner;}
 
     public String getDesc(){return this._description;}

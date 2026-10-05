@@ -2,6 +2,7 @@ package maiday.chara;
 
 import java.io.IOException;
 
+import maiday.action.actions;
 import maiday.action.attackAction;
 import maiday.items.*;
 import maiday.game.*;
@@ -9,11 +10,27 @@ import maiday.game.*;
 import java.util.Map;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 
 public class hero extends actor {
 
     public hero(String name, int hp, int def, int atk){
         super(name, hp, def, atk, "This is you.", true);
+    }
+
+    @JsonCreator
+    public hero(@JsonProperty("id") UUID id,
+                @JsonProperty("name") String name,
+                @JsonProperty("maxHp") int maxHp,
+                @JsonProperty("hp") int hp,
+                @JsonProperty("def") int def,
+                @JsonProperty("atk") int atk,
+                @JsonProperty("actions") Map<UUID, actions> savedActions,
+                @JsonProperty("inventory") Map<UUID, item> savedInventory) {
+        super(id, name, maxHp, hp, def, atk, "This is you.", true,
+              savedActions, savedInventory);
     }
     
     private equipment weapon;

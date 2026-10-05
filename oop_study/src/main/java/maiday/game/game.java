@@ -1,19 +1,52 @@
 package maiday.game;
 import maiday.chara.*;
 import maiday.fight.fight;
+import maiday.infra.Data.reader;
 import maiday.action.*;
 import maiday.items.*;
 
+
 import java.io.IOException;
 import java.io.UncheckedIOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
+import java.util.stream.Stream;
 
 public class game {
 
     private HashMap<UUID, actor> knownActors = new HashMap<>(); //all instances of new actors should be added to this list
     private HashMap<UUID, item> knownItems = new HashMap<>(); //same for items
     private HashMap<UUID, actions> knownActions = new HashMap<>(); //same for actions
-    private game() { }
+    private game() {
+        Path path = Paths.get("data/actors");
+
+        try (Stream<Path> stream = Files.walk(path)) {
+            stream.filter(Files::isRegularFile)
+                    .filter(t -> t.toString().endsWith(".json"))
+                    .forEach(file -> {
+                        hero targetHero = reader.get_instance().readHero(file);
+                        addActor(targetHero);
+                        
+                        
+                    });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        path = Paths.get("data/items");
+        try (Stream<Path> stream = Files.walk(path)) {
+            stream.filter(Files::isRegularFile)
+                    .filter(t -> t.toString().endsWith(".json"))
+                    .forEach(file -> {
+                        item targetItem = reader.get_instance().readItem(file);
+                        addItem(targetItem);
+                        
+                    });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+     }
 
     private static final game INSTANCE = new game(); //game is a singleton. refer to it as game.getInstance()...
 

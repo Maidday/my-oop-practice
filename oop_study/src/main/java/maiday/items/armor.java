@@ -5,11 +5,10 @@ import maiday.chara.actor;
 public class armor extends equipment{
     protected int _def;
     public armor(String name, int def){
-        super(name, "armor");
-        this._def = def;
+        super(name, "armor", def, "");
     }
     public armor(String name, int def, String desc){
-        super(name, "armor", desc);
+        super(name, "armor", def, desc);
         this._def = def;
     }
 

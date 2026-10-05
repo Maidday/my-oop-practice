@@ -50,6 +50,21 @@ public abstract class actor {
         this.id = UUID.randomUUID();
     }
 
+    protected actor(UUID id, String name, int maxHp, int hp, int def, int atk,
+                String desc, boolean isPC,
+                Map<UUID, actions> actions, Map<UUID, item> inventory) {
+    this.id = id;
+    this.name = name;
+    this.maxHp = maxHp;
+    this.hp = hp;
+    this.def = def;
+    this.atk = atk;
+    this.desc = desc;
+    this.PC = isPC;
+    actions.values().forEach(this::add);   
+    this.inventory.putAll(inventory);
+}
+
     public boolean isPC(){
         return PC;
     }
