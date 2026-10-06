@@ -141,6 +141,11 @@ public abstract class actor {
 
      }
 
+     public hero toHero(){
+        hero rHero = new hero(this.id, this.name, this.maxHp, this.hp, this.def, this.atk, this.getActions(), this.getInventory());
+        return rHero;
+     }
+
     @Override
     public String toString(){
         return getName();

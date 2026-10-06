@@ -2,18 +2,21 @@ package maiday.text;
 
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class image implements Text{
     private String src;
     private String alt;
     private int level;
     private UUID id = UUID.randomUUID();
 
-    public image(String src){
-        this.src = src;
-        this.alt = "image is supposed to be there";
+    public image() {
     }
-    
-    public image(String src, String alt){
+
+    @JsonCreator
+    public image(@JsonProperty("src") String src,
+                @JsonProperty("alt") String alt){
         this.src = src;
         this.alt = alt;
     }

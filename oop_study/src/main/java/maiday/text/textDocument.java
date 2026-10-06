@@ -5,14 +5,38 @@ import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.UUID;
 
-public class textDocument {
-    private alphaText root = new alphaText();
-    private alphaText current = root;
-    private IdentityHashMap<alphaText, alphaText> parents = new IdentityHashMap<>();
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-    private static final textDocument INSTANCE = new textDocument();
+public class textDocument {
+    private alphaText root;
+    private alphaText current;
+
+    @JsonIgnore
+    private IdentityHashMap<alphaText, alphaText> parents;
+
+    public textDocument() {
+        this.root = new alphaText();
+        this.current = root;
+        this.parents = new IdentityHashMap<>();
+    }
+
+    @JsonCreator
+    public textDocument(@JsonProperty("root") alphaText root,
+                       @JsonProperty("current") alphaText current) {
+        this.root = root != null ? root : new alphaText();
+        this.current = current != null ? current : this.root;
+        this.parents = new IdentityHashMap<>();
+    }
+
+    private static textDocument INSTANCE = new textDocument();
 
     public static textDocument getInstance(){return INSTANCE;}
+    public void setInstance(textDocument saved){
+        INSTANCE = saved;
+    }
+
 
     public alphaText getRoot(){return root;}
     public alphaText getCurrent(){return current;}

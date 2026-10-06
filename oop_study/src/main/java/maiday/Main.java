@@ -29,10 +29,6 @@ public class Main{
         
 
         String InterfaceMode = intefaceMode.getInterfaceMode(arguments, logger, scanner);
-        hero Vadim = new hero("Vadim", 1, 2, 3);
-        writer.get_instance().write(Vadim, logger);
-        weapon sword = new weapon("sword", 5);
-        writer.get_instance().write(sword, logger);
 
         while(true){
             try{

@@ -39,12 +39,20 @@ public abstract class commandListener {
             case "add":
                 addCommand.addCharsVer(arguments, commandArguments, options, commandOptions, scanner, logger);
                 break;
+            case "save":
+                saveCommand.save(arguments, commandArguments, options, commandOptions, scanner, logger);
+                break;
+            case "load":
+                loadCommand.load(arguments, commandArguments, options, commandOptions, scanner, logger);
+                break;
             case "help":
                 logger.log("create - create a character, an item or an action.(actor/item/action as arguments and --name, --desc, --hp, --atk, --def when appliable.)" +
                         "\nls - list all items of category or details about specific item(accepts catgeory as an argument and an id or name of item as options)" +
                         "\nact - perform an act or ability on target(Accepts <action><actor><target> arguments.)" +
                         "\nadd - add an item or an action to an actor(accepts --actor and --item/--action options)" +
-                        "\nexit - terminates program."
+                        "\nexit - terminates program." +
+                        "\nsave - writes target hero or item to json file." +
+                        "\nload - loads target file as hero or item."
                 );
                 break;
             case "exit":
@@ -78,6 +86,14 @@ public abstract class commandListener {
                 break;
             case "help":
                 logger.log("pwd - show current path\nprint [--whole] [--id] - print current element or whole document\nadd <container|leaf> <type> - add a text element\nrm [<elem_name>] - remove an element\nup - move to parent\ncd <path>|--id <container_id> - change current container\nexit - terminates program.");
+                break;
+            case "save":
+                commandArguments.add(1, "document");
+                saveCommand.save(arguments, commandArguments, options, commandOptions, scanner, logger);
+                break;
+            case "load":
+                commandArguments.add(1, "document");
+                loadCommand.load(arguments, commandArguments, options, commandOptions, scanner, logger);
                 break;
             case "exit":
                 System.exit(0);

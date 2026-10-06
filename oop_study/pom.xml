@@ -16,8 +16,8 @@
     <dependencies>
         <dependency>
             <groupId>tools.jackson.core</groupId>
-        <artifactId>jackson-databind</artifactId>
-        <version>3.2.3</version>
+            <artifactId>jackson-databind</artifactId>
+            <version>3.2.3</version>
         </dependency>
 
         <!-- Source: https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-annotations -->

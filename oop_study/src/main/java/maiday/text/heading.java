@@ -2,12 +2,20 @@ package maiday.text;
 
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class heading implements Text{
     private String content;
     private int level;
     private UUID id = UUID.randomUUID();
 
-    public heading(String content, int level){
+    public heading() {
+    }
+
+    @JsonCreator
+    public heading(@JsonProperty("content") String content,
+                   @JsonProperty("level") int level){
         this.content = content;
         this.level = level;
     }

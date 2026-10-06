@@ -4,6 +4,7 @@ import java.nio.file.Path;
 import maiday.chara.actor;
 import maiday.chara.hero;
 import maiday.items.item;
+import maiday.text.textDocument;
 
 import tools.jackson.databind.ObjectMapper;
 
@@ -25,5 +26,9 @@ public class reader {
     public item readItem(Path file){
         item rItem = objectMapper.readValue(file.toFile(), item.class);
         return rItem;
+    }
+    public textDocument readDoc(Path file){
+        textDocument rDoc = objectMapper.readValue(file.toFile(), textDocument.class);
+        return rDoc;
     }
 }

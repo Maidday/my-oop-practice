@@ -2,6 +2,7 @@ package maiday.infra.Data;
 
 import maiday.chara.actor;
 import maiday.items.item;
+import maiday.text.textDocument;
 
 import tools.jackson.databind.ObjectMapper;
 
@@ -15,6 +16,7 @@ public class writer {
     private final ObjectMapper objectMapper;
     private static final Path actorDIR = Path.of("data/actors");
     private static final Path itemDIR = Path.of("data/items");
+    private static final Path docDIR = Path.of("data/docs");
     private writer(){
         this.objectMapper = new ObjectMapper();
         
@@ -40,4 +42,11 @@ public class writer {
 
     }
     
+    public void write(textDocument doc, Logger logger) throws IOException{
+        Files.createDirectories(docDIR);
+        Path file = docDIR.resolve("document.json");
+        objectMapper.writeValue(file.toFile(), doc);
+        logger.log("Writing to: " + file.toAbsolutePath());
+
+    }
 }

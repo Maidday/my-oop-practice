@@ -2,12 +2,19 @@ package maiday.text;
 
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class paragraph implements Text{
     private String content;
     private int level;
     private UUID id = UUID.randomUUID();
 
-    public paragraph(String content) {this.content = content;} //constructor
+    public paragraph() {
+    }
+
+    @JsonCreator
+    public paragraph(@JsonProperty("content") String content) {this.content = content;} //constructor
 
     public String getText(){return content;}
     public void setText(String content){this.content = content;}

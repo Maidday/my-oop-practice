@@ -22,29 +22,31 @@ public class game {
     private game() {
         Path path = Paths.get("data/actors");
 
-        try (Stream<Path> stream = Files.walk(path)) {
-            stream.filter(Files::isRegularFile)
-                    .filter(t -> t.toString().endsWith(".json"))
-                    .forEach(file -> {
-                        hero targetHero = reader.get_instance().readHero(file);
-                        addActor(targetHero);
-                        
-                        
-                    });
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (Files.exists(path)) {
+            try (Stream<Path> stream = Files.walk(path)) {
+                stream.filter(Files::isRegularFile)
+                        .filter(t -> t.toString().endsWith(".json"))
+                        .forEach(file -> {
+                            hero targetHero = reader.get_instance().readHero(file);
+                            addActor(targetHero);
+                        });
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
+
         path = Paths.get("data/items");
-        try (Stream<Path> stream = Files.walk(path)) {
-            stream.filter(Files::isRegularFile)
-                    .filter(t -> t.toString().endsWith(".json"))
-                    .forEach(file -> {
-                        item targetItem = reader.get_instance().readItem(file);
-                        addItem(targetItem);
-                        
-                    });
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (Files.exists(path)) {
+            try (Stream<Path> stream = Files.walk(path)) {
+                stream.filter(Files::isRegularFile)
+                        .filter(t -> t.toString().endsWith(".json"))
+                        .forEach(file -> {
+                            item targetItem = reader.get_instance().readItem(file);
+                            addItem(targetItem);
+                        });
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
      }
 
