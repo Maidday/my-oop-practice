@@ -42,11 +42,7 @@ public class equipment extends item{
         public void onUse(actor target, int mod, Logger logger) throws IOException{
             target.equip(this, logger);
         }
-
-        @Override 
-        public String toString(){
-            return getSlot();
-        }
+        
 
 
 }

@@ -20,23 +20,27 @@ public abstract class addCommand {
             logger.log("This command requires a target(--char or --actor) and an item or ability to add(--item or --act");
             return;
         }
-        for(Map.Entry<String, String> entry : commandOptions.entrySet()){
-                String key = entry.getKey();
-                String value = entry.getValue().toLowerCase();
+        
                 actor target = new hero("", 0, 0, 0);
                 actions targetAction = new actions(null, "", "");
                 item targetItem = new item("");
+                UUID targetId = new UUID(0, 0);
+        for(Map.Entry<String, String> entry : commandOptions.entrySet()){
+                String key = entry.getKey();
+                String value = entry.getValue().toLowerCase();
                 switch(key){
                     case "-c":
                     case "--char":
                     case "--character":
                     case "-a":
                     case "--actor":
-                        UUID targetId = UUID.fromString(value);
+                    case "--target":
+                        
+                        targetId = UUID.fromString(value);
                         if(game.getInstance().getKnownActors().containsKey(targetId)){
                             target = game.getInstance().getKnownActors().get(targetId);
                         }
-                        else if(game.getInstance().getKnownActors().toString().toLowerCase().contains(value)){
+                        else if(game.getInstance().getKnownActors().toString().toLowerCase().contains(value.toLowerCase())){
                             for(Map.Entry<UUID, actor> entry2 : game.getInstance().getKnownActors().entrySet()){
                                 if(entry2.getValue().toString().toLowerCase().equals(value)){
                                     target = game.getInstance().getKnownActors().get(entry2.getKey());
@@ -73,7 +77,9 @@ public abstract class addCommand {
 
 
                 }
-                if(target.toString().isEmpty()) throw new IllegalArgumentException("No valid actor selected");
+                
+            }
+            if(target.toString().isEmpty()) throw new IllegalArgumentException("No valid actor selected");
                 else if(targetAction.toString().isEmpty() && targetItem.toString().isEmpty()) throw new IllegalArgumentException("Not a valid action or item");
                 else if(!targetAction.toString().isEmpty()){
                     target.add(targetAction);
@@ -82,7 +88,6 @@ public abstract class addCommand {
                     target.add(targetItem);
                 }
                 else return;
-            }
     }
 
     public static void addTextVer(){

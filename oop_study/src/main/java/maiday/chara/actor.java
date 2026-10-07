@@ -19,7 +19,7 @@ public abstract class actor {
     private UUID id;    //Unique ID of an actor
     protected  boolean PC;      //PC is for "Player Character". Actor act according to their "AI" if they are not PCs
     protected String desc; //description for enemies
-    protected actions _defaultAct = new attackAction(this);
+    protected actions _defaultAct;
 
 
     protected HashMap<UUID, actions> _actions = new HashMap<>();
@@ -28,6 +28,7 @@ public abstract class actor {
     public actor(String name, int hp, int def, int atk, boolean isPC){
         actions baseAttack = new attackAction(this);
         _actions.put(baseAttack.getId(), baseAttack);
+        this._defaultAct = baseAttack;
         this.name = name;
         this.maxHp = hp;
         this.hp = hp;
@@ -40,6 +41,7 @@ public abstract class actor {
     public actor(String name, int hp, int def, int atk, String desc, boolean isPC){
         actions baseAttack = new attackAction(this);
         _actions.put(baseAttack.getId(), baseAttack);
+        this._defaultAct = baseAttack;
         this.name = name;
         this.maxHp = hp;
         this.hp = hp;

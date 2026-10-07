@@ -12,11 +12,12 @@ import maiday.chara.*;
 import maiday.fight.fight;
 import maiday.action.actions;
 
-public abstract class actCommand {
+public abstract class actCommand {  //act <action> <acting hero> <target>
 
     public static void act(ArrayList<String> arguments, ArrayList<String> commandArguments, HashMap<String, String> options, HashMap<String, String> commandOptions, Scanner scanner, Logger logger) throws IOException{
-        String name = commandArguments.get(2).toLowerCase();
+        String name = commandArguments.get(2);
         UUID id = UUID.fromString(name);
+        name.toLowerCase();
         actor acting = new hero(name, 0, 0, 0);
         if(game.getInstance().getKnownActors().containsKey(id)) acting = game.getInstance().getKnownActors().get(id);
         else if (game.getInstance().getKnownActors().toString().toLowerCase().contains(name)){
@@ -28,8 +29,9 @@ public abstract class actCommand {
         }
         else throw new IllegalArgumentException("Actor not found.");
 
-        String actionName = commandArguments.get(1).toLowerCase();
+        String actionName = commandArguments.get(1);
         UUID actionId = UUID.fromString(actionName);
+        actionName.toLowerCase();
         actions actingAction = new actions(null, "Lorem", "Ipsum");
         if(acting.getActions().containsKey(actionId)) actingAction = acting.getActions().get(actionId);
         else if(acting.getActions().toString().contains(actionName)){
@@ -41,8 +43,9 @@ public abstract class actCommand {
         }
         else throw new IllegalArgumentException("Actor does not have action " + actionName);
         
-        String targetName = commandArguments.get(3).toLowerCase();
+        String targetName = commandArguments.get(3);
         UUID targetId = UUID.fromString(targetName);
+        targetName.toLowerCase();
         actor target = new zhegan();
         if(game.getInstance().getKnownActors().containsKey(targetId)) target = game.getInstance().getKnownActors().get(targetId);
         else if(game.getInstance().getKnownActors().values().toString().contains(targetName)){

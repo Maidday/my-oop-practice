@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 public abstract class intefaceMode {
     public static String getInterfaceMode(ArrayList<String> arguments, Logger logger, Scanner scanner) throws IOException{
-        if(!arguments.get(0).toLowerCase().equals("text") || !arguments.get(0).toLowerCase().equals("chars")){
+        if(!arguments.get(0).toLowerCase().equals("text") && !arguments.get(0).toLowerCase().equals("chars")){
                 logger.log("Interface mode unspecified. Choose interface mode: text or chars?");
                 String answer = scanner.nextLine();
                 if(answer.toLowerCase().equals("text") || answer.toLowerCase().equals("chars")) {
