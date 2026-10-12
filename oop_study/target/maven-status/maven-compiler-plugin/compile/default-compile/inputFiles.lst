@@ -1,5 +1,6 @@
 D:\src\project2_Java\oop_study\src\main\java\maiday\action\actions.java
 D:\src\project2_Java\oop_study\src\main\java\maiday\action\attackAction.java
+D:\src\project2_Java\oop_study\src\main\java\maiday\action\equipAction.java
 D:\src\project2_Java\oop_study\src\main\java\maiday\chara\actor.java
 D:\src\project2_Java\oop_study\src\main\java\maiday\chara\bob.java
 D:\src\project2_Java\oop_study\src\main\java\maiday\chara\hero.java
@@ -15,6 +16,7 @@ D:\src\project2_Java\oop_study\src\main\java\maiday\commands\listCommand.java
 D:\src\project2_Java\oop_study\src\main\java\maiday\commands\loadCommand.java
 D:\src\project2_Java\oop_study\src\main\java\maiday\commands\parser.java
 D:\src\project2_Java\oop_study\src\main\java\maiday\commands\printCommand.java
+D:\src\project2_Java\oop_study\src\main\java\maiday\commands\pullCommand.java
 D:\src\project2_Java\oop_study\src\main\java\maiday\commands\pwdCommand.java
 D:\src\project2_Java\oop_study\src\main\java\maiday\commands\rmCommand.java
 D:\src\project2_Java\oop_study\src\main\java\maiday\commands\saveCommand.java
@@ -24,6 +26,7 @@ D:\src\project2_Java\oop_study\src\main\java\maiday\game\game.java
 D:\src\project2_Java\oop_study\src\main\java\maiday\game\Logger.java
 D:\src\project2_Java\oop_study\src\main\java\maiday\infra\Data\reader.java
 D:\src\project2_Java\oop_study\src\main\java\maiday\infra\Data\writer.java
+D:\src\project2_Java\oop_study\src\main\java\maiday\infra\WebAPI\pull.java
 D:\src\project2_Java\oop_study\src\main\java\maiday\items\armor.java
 D:\src\project2_Java\oop_study\src\main\java\maiday\items\clothArmor.java
 D:\src\project2_Java\oop_study\src\main\java\maiday\items\equipment.java
@@ -34,7 +37,10 @@ D:\src\project2_Java\oop_study\src\main\java\maiday\items\rustySword.java
 D:\src\project2_Java\oop_study\src\main\java\maiday\items\usable.java
 D:\src\project2_Java\oop_study\src\main\java\maiday\items\weapon.java
 D:\src\project2_Java\oop_study\src\main\java\maiday\Main.java
+D:\src\project2_Java\oop_study\src\main\java\maiday\records\charRecord.java
 D:\src\project2_Java\oop_study\src\main\java\maiday\records\parserResult.java
+D:\src\project2_Java\oop_study\src\main\java\maiday\records\skillRecord.java
+D:\src\project2_Java\oop_study\src\main\java\maiday\records\weaponRecord.java
 D:\src\project2_Java\oop_study\src\main\java\maiday\testClasses\cli\Commands.java
 D:\src\project2_Java\oop_study\src\main\java\maiday\text\alphaText.java
 D:\src\project2_Java\oop_study\src\main\java\maiday\text\heading.java

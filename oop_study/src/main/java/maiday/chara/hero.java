@@ -19,6 +19,9 @@ public class hero extends actor {
     public hero(String name, int hp, int def, int atk){
         super(name, hp, def, atk, "This is you.", true);
     }
+    public hero(String name, int hp, int def, int atk, String desc){
+        super(name, hp, def, atk, desc, true);
+    }
 
     @JsonCreator
     public hero(@JsonProperty("id") UUID id,
@@ -129,7 +132,7 @@ public class hero extends actor {
                 equipment.equip(this);
                 if(equipment.getSlot().equals("weapon")) this.weapon = equipment;
                 if(equipment.getSlot().equals("armor")) this.armor = equipment;
-                UUID equipmentID = UUID.fromString("");
+                UUID equipmentID = null;
                 for(Map.Entry<UUID, item> entry : this.getInventory().entrySet()){
                     item value = entry.getValue();
                     UUID key = entry.getKey();

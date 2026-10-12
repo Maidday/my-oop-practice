@@ -2,3 +2,4 @@ logs/*
 .vscode/*
 oop_study/data/*
 data/*
+tmp/*

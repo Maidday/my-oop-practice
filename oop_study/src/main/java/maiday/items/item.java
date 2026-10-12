@@ -53,6 +53,10 @@ public class item {
         return desc;
     }
 
+    public equipment toEquipment(){
+        return new equipment(this.name, "", this.getDesc());
+    }
+
 
 
     public String getName(){

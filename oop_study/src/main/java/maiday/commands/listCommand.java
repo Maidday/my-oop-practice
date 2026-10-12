@@ -50,7 +50,9 @@ public abstract class listCommand {
                 default:
                     throw new IllegalArgumentException("Unknown category for ls command.");
             }
-            for(Map.Entry<String, String> Entry : commandOptions.entrySet()){
+            
+        }
+        for(Map.Entry<String, String> Entry : commandOptions.entrySet()){
                 String key = Entry.getKey().toLowerCase();
                 String value = Entry.getValue();
                 UUID IDvalue = UUID.fromString(value);
@@ -109,7 +111,7 @@ public abstract class listCommand {
                                     break;
                                 case "action":
                                 case "ability":
-                                    actions targetAction = new actions(null);
+                                    actions targetAction = new actions("anonimous action");
                                     if(game.getInstance().getKnownActions().containsKey(IDvalue)){
                                     targetAction = game.getInstance().getKnownActions().get(IDvalue);
                                     
@@ -129,7 +131,6 @@ public abstract class listCommand {
                         }
                 }
             }
-        }
     }
     
 }

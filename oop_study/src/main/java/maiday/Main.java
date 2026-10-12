@@ -4,6 +4,7 @@ import maiday.items.*;
 import maiday.fight.fight;
 import maiday.records.parserResult;
 import maiday.infra.Data.writer;
+import maiday.infra.WebAPI.pull;
 
 import java.io.IOException;
 import java.util.*;
@@ -33,8 +34,8 @@ public class Main{
         while(true){
             try{
             
-            
-                commandListener.getInstance().listener(arguments, options, scanner, logger, InterfaceMode);
+            commandListener.getInstance().listener(arguments, options, scanner, logger, InterfaceMode);
+                
             
             
 

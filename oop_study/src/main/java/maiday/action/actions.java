@@ -1,6 +1,8 @@
 package maiday.action;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
@@ -20,6 +22,14 @@ public class actions {
     protected String _name;
     protected String _description;
     private UUID _id;
+
+    @JsonCreator 
+    public actions(
+        @JsonProperty("name") String name
+    ){
+        this._name = name;
+        this._id = UUID.randomUUID();
+    }
 
     public actions(actor owner, String name, String desc){
         this._owner = owner;

@@ -8,6 +8,7 @@ import java.util.*;
 
 import maiday.action.actions;
 import maiday.action.attackAction;
+import maiday.action.equipAction;
 import maiday.fight.fight;
 
 public abstract class actor {
@@ -26,8 +27,11 @@ public abstract class actor {
     protected HashMap<UUID, item> inventory = new HashMap<>();
 
     public actor(String name, int hp, int def, int atk, boolean isPC){
+        actions equip = new equipAction(this);
+        _actions.put(equip.getId(), equip);
         actions baseAttack = new attackAction(this);
         _actions.put(baseAttack.getId(), baseAttack);
+        
         this._defaultAct = baseAttack;
         this.name = name;
         this.maxHp = hp;
@@ -39,6 +43,8 @@ public abstract class actor {
     }
 
     public actor(String name, int hp, int def, int atk, String desc, boolean isPC){
+        actions equip = new equipAction(this);
+        _actions.put(equip.getId(), equip);
         actions baseAttack = new attackAction(this);
         _actions.put(baseAttack.getId(), baseAttack);
         this._defaultAct = baseAttack;

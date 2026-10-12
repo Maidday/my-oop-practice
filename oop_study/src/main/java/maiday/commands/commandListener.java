@@ -52,8 +52,12 @@ public abstract class commandListener {
                         "\nadd - add an item or an action to an actor(accepts --actor and --item/--action options)" +
                         "\nexit - terminates program." +
                         "\nsave - writes target hero or item to json file." +
-                        "\nload - loads target file as hero or item."
+                        "\nload - loads target file as hero or item." +
+                        "\npull - pulls character or weapon from web api, specified by name."
                 );
+                break;
+            case "pull":
+                pullCommand.pull(arguments, commandArguments, options, commandOptions, scanner, logger);
                 break;
             case "exit":
                 System.exit(0);
@@ -95,6 +99,7 @@ public abstract class commandListener {
                 commandArguments.add(1, "document");
                 loadCommand.load(arguments, commandArguments, options, commandOptions, scanner, logger);
                 break;
+            
             case "exit":
                 System.exit(0);
                 break;
