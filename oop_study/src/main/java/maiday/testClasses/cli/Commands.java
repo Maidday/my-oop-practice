@@ -5,12 +5,15 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
+import java.util.UUID;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import maiday.action.actions;
+import maiday.chara.actor;
 import maiday.chara.hero;
 import maiday.chara.zhegan;
 import maiday.commands.*;
@@ -189,6 +192,40 @@ public class Commands {
         loadCommand.load(arguments, commandArguments, options, commandOptions, scanner, logger);
 
         assertTrue(game.getInstance().getKnownActors().containsKey(Vadim.getId()));
+    }
+
+    @Test 
+    public void pullTest_1() throws IOException{
+        commandArguments.add("pull");
+        commandArguments.add("actor");
+        commandOptions.put("--name", "albedo");
+
+        pullCommand.pull(arguments, commandArguments, options, commandOptions, scanner, logger);
+
+        actor albedo = new hero("vadim", 0, 0, 0);
+
+        for(Map.Entry<UUID, actor> entry : game.getInstance().getKnownActors().entrySet()){
+            if(entry.getValue().getName().equalsIgnoreCase("albedo")) albedo = entry.getValue();
+        }
+
+        assertTrue(albedo.getName().equalsIgnoreCase("albedo"));
+    }
+
+    @Test
+    public void pullTest_2() throws IOException{
+        commandArguments.add("pull");
+        commandArguments.add("item");
+        commandOptions.put("--name", "freedom-sworn");
+
+        pullCommand.pull(arguments, commandArguments, options, commandOptions, scanner, logger);
+
+        item sworn = new item("sworn");
+
+        for(Map.Entry<UUID, item> entry : game.getInstance().getKnownItems().entrySet()){
+            if(entry.getValue().getName().equalsIgnoreCase("freedom-sworn")) sworn = entry.getValue();
+        }
+
+        assertTrue(sworn.getName().equalsIgnoreCase("freedom-sworn"));
     }
 
     

@@ -2,6 +2,9 @@ package maiday.commands;
 
 import java.io.IOException;
 import java.util.*;
+
+import org.junit.Test;
+
 import maiday.game.Logger;
 import maiday.infra.WebAPI.pull;
 
@@ -51,4 +54,5 @@ public abstract class pullCommand {
 
         }
     }
+
 }
