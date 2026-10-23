@@ -13,7 +13,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
     @JsonSubTypes.Type(value = image.class, name = "image"),
     @JsonSubTypes.Type(value = link.class, name = "link")
 })
-public interface Text{
+public interface Text{  //this interface is a prototype for every other class of maiday.text package
 
     String render(); //render to plain text
     int getLevel();

@@ -12,7 +12,6 @@ public class alphaText implements Text{
     private String name = "";
     private UUID id = UUID.randomUUID();
 
-    //mkethods
 
     public void addNew(){
 
