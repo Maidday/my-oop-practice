@@ -5,6 +5,7 @@ import java.util.UUID;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+// Leaf component in the Text Composite tree.
 public class link implements Text{
     private String title;
     private String url;

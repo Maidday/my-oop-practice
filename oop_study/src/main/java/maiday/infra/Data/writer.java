@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.nio.file.*;
 import maiday.game.Logger;
 
+// Singleton pattern: shares the JSON writer used by the persistence layer.
 public class writer {
     
 

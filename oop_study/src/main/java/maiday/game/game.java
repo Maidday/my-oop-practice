@@ -14,6 +14,7 @@ import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Stream;
 
+// Singleton pattern: shares the game's registries and turn-processing service.
 public class game {
 
     private HashMap<UUID, actor> knownActors = new HashMap<>(); //all instances of new actors should be added to this list
@@ -50,7 +51,7 @@ public class game {
         }
      }
 
-    private static final game INSTANCE = new game(); //game is a singleton. refer to it as game.getInstance()...
+    private static final game INSTANCE = new game();
 
     public static game getInstance() {
         return INSTANCE;

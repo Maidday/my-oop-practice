@@ -5,6 +5,7 @@ import java.util.UUID;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+// Leaf component in the Text Composite tree.
 public class paragraph implements Text{
     private String content;
     private int level;

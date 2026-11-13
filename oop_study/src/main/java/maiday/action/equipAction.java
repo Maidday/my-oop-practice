@@ -8,6 +8,7 @@ import maiday.items.*;
 import maiday.fight.fight;
 import maiday.game.Logger;
 
+// Concrete command that equips an item from the actor's inventory.
 public class equipAction extends actions{
 
     public equipAction(actor owner){

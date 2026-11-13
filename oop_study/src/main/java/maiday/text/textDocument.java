@@ -9,7 +9,8 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class textDocument { //This class utilizes Singleton pattern.
+// Singleton manager for the Composite tree of text containers and leaves.
+public class textDocument {
     private alphaText root;
     private alphaText current;
 
@@ -30,7 +31,7 @@ public class textDocument { //This class utilizes Singleton pattern.
         this.parents = new IdentityHashMap<>();
     }
 
-    private static textDocument INSTANCE = new textDocument(); //This class utilizes Singleton pattern.
+    private static textDocument INSTANCE = new textDocument();
 
     public static textDocument getInstance(){return INSTANCE;}
     public void setInstance(textDocument saved){

@@ -12,6 +12,7 @@ import maiday.game.*;
 import maiday.commands.*;
 
 
+// Starts the command loop, which delegates input to the singleton command dispatcher.
 public class Main{
     public static void main(String[] args) throws IOException{
         Scanner scanner = new Scanner(System.in);

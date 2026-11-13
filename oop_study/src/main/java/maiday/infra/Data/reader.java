@@ -8,6 +8,7 @@ import maiday.text.textDocument;
 
 import tools.jackson.databind.ObjectMapper;
 
+// Singleton pattern: shares the JSON reader used by the persistence layer.
 public class reader {
     private final ObjectMapper objectMapper;
 

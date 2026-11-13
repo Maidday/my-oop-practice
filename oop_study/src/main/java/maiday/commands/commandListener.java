@@ -6,11 +6,11 @@ import maiday.game.*;
 import maiday.records.*;
 import maiday.text.*;
 
-
+// Singleton command dispatcher: routes parsed command names to their handlers.
 public abstract class commandListener {
     private commandListener() { }
 
-    private static final commandListener INSTANCE = new commandListener(){}; //listener is a singleton. refer to it as listener.getInstance()...
+    private static final commandListener INSTANCE = new commandListener(){};
 
     public static commandListener getInstance() {
         return INSTANCE;

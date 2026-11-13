@@ -10,6 +10,7 @@ import maiday.chara.*;
 import maiday.game.*;
 import maiday.fight.*;
 
+// Concrete command that performs an attack.
 public class attackAction extends actions{
 
     public attackAction(actor _owner){

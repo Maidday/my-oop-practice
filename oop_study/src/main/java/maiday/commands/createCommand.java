@@ -7,6 +7,7 @@ import maiday.game.*;
 import maiday.items.*;
 import maiday.chara.hero;
 
+// Factory-style creation: selects and constructs domain objects from the requested type.
 public abstract class createCommand{
     
     public static void create(ArrayList<String> arguments, ArrayList<String> commandArguments, HashMap<String, String> options, HashMap<String, String> commandOptions, Scanner scanner, Logger logger) throws IOException{

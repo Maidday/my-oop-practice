@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
+// Composite node: implements Text and contains other Text components.
 public class alphaText implements Text{
 
     private ArrayList<Text> children = new ArrayList<>();

@@ -5,6 +5,7 @@ import java.util.UUID;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
+// Component interface for the Composite text tree.
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
 @JsonSubTypes({
     @JsonSubTypes.Type(value = alphaText.class, name = "alphaText"),
@@ -13,7 +14,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
     @JsonSubTypes.Type(value = image.class, name = "image"),
     @JsonSubTypes.Type(value = link.class, name = "link")
 })
-public interface Text{  //this interface is a prototype for every other class of maiday.text package
+public interface Text{
 
     String render(); //render to plain text
     int getLevel();
@@ -25,4 +26,3 @@ public interface Text{  //this interface is a prototype for every other class of
     }
 
 }
-

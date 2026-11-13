@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
+// Factory-style creation: constructs the requested Text leaf for the document Composite.
 public abstract class addTextCommand {
     public static void add(ArrayList<String> commandArguments, HashMap<String, String> commandOptions, Scanner scanner, Logger logger) throws IOException{
         String kind = commandArguments.size() > 1 ? commandArguments.get(1).toLowerCase() : "";

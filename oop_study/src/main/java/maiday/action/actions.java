@@ -14,6 +14,7 @@ import maiday.chara.*;
 import maiday.game.*;
 import maiday.fight.*;
 
+// Command pattern: each action object encapsulates behavior invoked through use().
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type", defaultImpl = attackAction.class)
 @JsonSubTypes({@JsonSubTypes.Type(value = attackAction.class, name = "attackAction")})
 public class actions {
